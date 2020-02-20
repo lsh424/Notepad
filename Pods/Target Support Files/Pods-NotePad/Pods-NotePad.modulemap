@@ -1,0 +1,6 @@
+module Pods_NotePad {
+  umbrella header "Pods-NotePad-umbrella.h"
+
+  export *
+  module * { export * }
+}
