@@ -32,12 +32,11 @@ class ImageManager {
             return imgID
         }
     
-    func deleteImage(imgNames: [String], index: Int) {
+    func deleteImage(imgIDs: [String], index: Int) {
         let fileManager = FileManager.default
         let directory = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent("ImageDirectory") as NSString
         
-        print(imgNames)
-        let path = directory.appendingPathComponent(imgNames[index])
+        let path = directory.appendingPathComponent(imgIDs[index])
         
         if fileManager.fileExists(atPath: path ) {
             do {

@@ -93,7 +93,7 @@ class MemoDAO {
         
         if let imgIDs = object.imgIDs{
         for i in 0..<imgIDs.count{
-            imageManager.deleteImage(imgNames: imgIDs, index: i)
+            imageManager.deleteImage(imgIDs: imgIDs, index: i)
         }
         }
         

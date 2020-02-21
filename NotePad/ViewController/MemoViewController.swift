@@ -93,9 +93,9 @@ class MemoViewController: UIViewController, UITextViewDelegate, UITextFieldDeleg
         let btnImg = UIImage(named: "down")
         let hideKeybrd = UIBarButtonItem(image: btnImg, style: .done, target: self, action: #selector(hideKeyboard))
                 
-            toolbar.setItems([imgPicker, hideKeybrd], animated: true)
-            contents.inputAccessoryView = toolbar
-            titleLabel.inputAccessoryView = toolbar
+        toolbar.setItems([imgPicker, hideKeybrd], animated: true)
+        contents.inputAccessoryView = toolbar
+        titleLabel.inputAccessoryView = toolbar
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -146,7 +146,7 @@ class MemoViewController: UIViewController, UITextViewDelegate, UITextFieldDeleg
             let touchPoint = longPressGestureRecognizer.location(in: self.imgCollectionView)
             if let indexPath = imgCollectionView.indexPathForItem(at: touchPoint){
                 
-                imageManager.deleteImage(imgNames: imgIDs, index: indexPath.row)
+                imageManager.deleteImage(imgIDs: imgIDs, index: indexPath.row)
                 
                 imgList.remove(at: indexPath.row)
                 imgIDs.remove(at: indexPath.row)

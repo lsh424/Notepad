@@ -2,6 +2,7 @@
 # platform :ios, '9.0'
 
 target 'NotePad' do
+    use_modular_headers!
   # Comment the next line if you don't want to use dynamic frameworks
   
     
