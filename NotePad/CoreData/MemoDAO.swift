@@ -11,9 +11,18 @@ import CoreData
 
 class MemoDAO {
     
+    lazy var persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "NotePad")
+        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+            if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        })
+        return container
+    }()
+    
     lazy var context: NSManagedObjectContext = {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        return appDelegate.persistentContainer.viewContext
+        return persistentContainer.viewContext
     }()
     
     func fetch() -> [MemoData] {
@@ -89,11 +98,10 @@ class MemoDAO {
     func delete(_ objectID: NSManagedObjectID) -> Bool {
         
         let object = self.context.object(with: objectID) as! Memo
-        let imageManager = ImageManager()
         
         if let imgIDs = object.imgIDs{
         for i in 0..<imgIDs.count{
-            imageManager.deleteImage(imgIDs: imgIDs, index: i)
+            ImageManager.deleteImage(imgIDs: imgIDs, index: i)
         }
         }
         

@@ -10,8 +10,9 @@ import UIKit
 
 class MemoListViewController: UITableViewController {
     
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     lazy var dao = MemoDAO()
+    lazy var memoList = [MemoData]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,20 +20,20 @@ class MemoListViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.appDelegate.memoList = self.dao.fetch()
+        memoList = self.dao.fetch()
         self.tableView.reloadData()
     }
 
     // MARK: - Table view data source & delegate
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let count = self.appDelegate.memoList.count
+        let count = memoList.count
         return count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let data = self.appDelegate.memoList[indexPath.row]
+        let data = memoList[indexPath.row]
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "memoCell") as! MemoCell
         
@@ -59,7 +60,7 @@ class MemoListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let data = self.appDelegate.memoList[indexPath.row]
+        let data = memoList[indexPath.row]
         
         guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "MemoVC") as? MemoViewController else {
             return
@@ -77,10 +78,10 @@ class MemoListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
-        let data = self.appDelegate.memoList[indexPath.row]
+        let data = memoList[indexPath.row]
         
         if dao.delete(data.objectID!) {
-            self.appDelegate.memoList.remove(at: indexPath.row)
+            memoList.remove(at: indexPath.row)
             self.tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }

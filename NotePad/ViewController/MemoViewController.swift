@@ -29,7 +29,6 @@ class MemoViewController: UIViewController, UITextViewDelegate, UITextFieldDeleg
     var readData: MemoData?
     
     lazy var dao = MemoDAO()
-    lazy var imageManager = ImageManager()
     
     var imgList: [UIImage] = []
     var imgIDs: [String] = []
@@ -54,7 +53,7 @@ class MemoViewController: UIViewController, UITextViewDelegate, UITextFieldDeleg
         if memoMode == .read {
 
             imgIDs = readData?.imgIDs ?? []
-            imgList = imageManager.fetchImageFromDocumentDitectory(imgIDs)
+            imgList = ImageManager.fetchImageFromDocumentDitectory(imgIDs)
             titleLabel.text = readData?.title
             contents.text = readData?.contents
             
@@ -146,7 +145,7 @@ class MemoViewController: UIViewController, UITextViewDelegate, UITextFieldDeleg
             let touchPoint = longPressGestureRecognizer.location(in: self.imgCollectionView)
             if let indexPath = imgCollectionView.indexPathForItem(at: touchPoint){
                 
-                imageManager.deleteImage(imgIDs: imgIDs, index: indexPath.row)
+                ImageManager.deleteImage(imgIDs: imgIDs, index: indexPath.row)
                 
                 imgList.remove(at: indexPath.row)
                 imgIDs.remove(at: indexPath.row)
@@ -270,7 +269,7 @@ extension MemoViewController: UIImagePickerControllerDelegate, UINavigationContr
         if let selectedImg = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
             imgList.append(selectedImg)
             
-            let imgID = imageManager.saveImage(img: selectedImg)
+            let imgID = ImageManager.saveImage(img: selectedImg)
             imgIDs.append(imgID)
             
             imgCollectionView.reloadData()
@@ -290,7 +289,7 @@ extension MemoViewController: UIImagePickerControllerDelegate, UINavigationContr
             manager.requestImage(for: asset, targetSize: CGSize(width: 800, height: 800), contentMode: .aspectFit, options: option, resultHandler: {(result, info)->Void in
                     image = result!
 
-                let imgID = self.imageManager.saveImage(img: image)
+                let imgID = ImageManager.saveImage(img: image)
                 arrayOfImages.append(image)
                 self.imgIDs.append(imgID)
                 })
@@ -319,7 +318,7 @@ extension MemoViewController: UIImagePickerControllerDelegate, UINavigationContr
                   return
             }
             
-                let imgID = self.imageManager.saveImage(img: image)
+                let imgID = ImageManager.saveImage(img: image)
                 self.imgList.append(image)
                 self.imgIDs.append(imgID)
             

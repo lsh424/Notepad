@@ -11,7 +11,7 @@ import UIKit
 
 class ImageManager {
 
-    func saveImage(img: UIImage) -> String {
+    class func saveImage(img: UIImage) -> String {
         let imgID = UUID().uuidString + ".jpg"
         let fileManager = FileManager.default
         let directory = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent("ImageDirectory")
@@ -32,7 +32,7 @@ class ImageManager {
             return imgID
         }
     
-    func deleteImage(imgIDs: [String], index: Int) {
+    class func deleteImage(imgIDs: [String], index: Int) {
         let fileManager = FileManager.default
         let directory = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent("ImageDirectory") as NSString
         
@@ -47,7 +47,7 @@ class ImageManager {
         }
     }
     
-    func fetchImageFromDocumentDitectory(_ imgIDs: [String]?) -> [UIImage]  {
+    class func fetchImageFromDocumentDitectory(_ imgIDs: [String]?) -> [UIImage]  {
        
         let fileManager = FileManager.default
         var imgList: [UIImage] = []
